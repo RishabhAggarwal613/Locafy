@@ -1,0 +1,37 @@
+# ─── IDE & Editor ─────────────────────────────────────────────────────────────
+.cursor/
+.vscode/
+.idea/
+*.iml
+
+# ─── Memory Bank (internal docs, excluded per user request) ──────────────────
+memory-bank/
+
+# ─── Frontend (Next.js) ───────────────────────────────────────────────────────
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# ─── Backend (Spring Boot / Maven) ────────────────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.env
+backend/application-local.yml
+backend/src/main/resources/application-local.yml
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
