@@ -58,6 +58,13 @@ public class SecurityConfig {
                 .requestMatchers("/api/payments/webhook").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/ws/**").permitAll()
+                // Vendor write endpoints
+                .requestMatchers(HttpMethod.POST, "/api/shops/**").hasRole("VENDOR")
+                .requestMatchers(HttpMethod.PUT, "/api/shops/**").hasRole("VENDOR")
+                .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("VENDOR")
+                .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("VENDOR")
+                .requestMatchers(HttpMethod.PATCH, "/api/products/**").hasRole("VENDOR")
+                .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("VENDOR")
                 // Role-protected endpoints
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/vendors/**").hasRole("VENDOR")

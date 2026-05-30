@@ -26,8 +26,18 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       accessToken: null,
-      setAuth: (user, accessToken) => set({ user, accessToken }),
-      clearAuth: () => set({ user: null, accessToken: null }),
+      setAuth: (user, accessToken) => {
+        if (typeof document !== 'undefined') {
+          document.cookie = `locafy-token=${accessToken}; path=/; max-age=${15 * 60}; SameSite=Lax`
+        }
+        set({ user, accessToken })
+      },
+      clearAuth: () => {
+        if (typeof document !== 'undefined') {
+          document.cookie = 'locafy-token=; path=/; max-age=0'
+        }
+        set({ user: null, accessToken: null })
+      },
       updateUser: (partial) =>
         set((state) => ({
           user: state.user ? { ...state.user, ...partial } : null,
