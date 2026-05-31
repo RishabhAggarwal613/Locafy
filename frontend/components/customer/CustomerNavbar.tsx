@@ -10,6 +10,7 @@ import { cartApi } from '@/lib/api/cart'
 
 const NAV = [
   { label: 'Explore', href: '/customer/explore' },
+  { label: 'Reels', href: '/customer/reels' },
   { label: 'Search', href: '/customer/search' },
   { label: 'Map', href: '/customer/map' },
   { label: 'Orders', href: '/customer/orders' },
@@ -59,6 +60,9 @@ export default function CustomerNavbar() {
           <LocationSwitcher compact />
           {user ? (
             <>
+              <Link href="/customer/profile" className="hidden sm:inline text-xs text-gray-500 hover:text-indigo-600">
+                Saved
+              </Link>
               <span className="hidden sm:inline text-xs text-gray-500 truncate max-w-[100px]">{user.name}</span>
               <button type="button" onClick={() => logout('/customer')} className="text-xs text-gray-500 hover:text-red-500">
                 Sign out

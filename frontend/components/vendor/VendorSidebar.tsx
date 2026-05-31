@@ -9,7 +9,7 @@ const NAV = [
   { label: 'Dashboard', href: '/vendor/dashboard', icon: '📊' },
   { label: 'Shop Profile', href: '/vendor/shop', icon: '🏪' },
   { label: 'Products', href: '/vendor/products', icon: '📦' },
-  { label: 'Reels', href: '/vendor/reels', icon: '🎬', disabled: true },
+  { label: 'Reels', href: '/vendor/reels', icon: '🎬' },
   { label: 'Orders', href: '/vendor/orders', icon: '🛒' },
   { label: 'History', href: '/vendor/history', icon: '📋', disabled: true },
   { label: 'Finance', href: '/vendor/finance', icon: '💰', disabled: true },

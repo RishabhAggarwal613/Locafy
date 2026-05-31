@@ -169,7 +169,11 @@ export interface Reel {
   views: number
   isLiked?: boolean
   isSaved?: boolean
-  distance?: number
+  distanceKm?: number
+  isPublished?: boolean
+  processingStatus?: string
+  publishedAt?: string
+  createdAt?: string
 }
 
 export interface ApiResponse<T> {
