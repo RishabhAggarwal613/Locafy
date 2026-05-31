@@ -121,12 +121,15 @@ export interface Order {
   status: OrderStatus
   paymentMethod: PaymentMethod
   paymentStatus: PaymentStatus
+  deliveryPartnerId?: string
   deliveryAddress?: {
     label?: string
     line1: string
     line2?: string
     city: string
     pincode: string
+    latitude?: number
+    longitude?: number
   }
   statusHistory: StatusHistoryEntry[]
   createdAt: string

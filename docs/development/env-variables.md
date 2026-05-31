@@ -102,7 +102,7 @@ All environment variables required to run Locafy. Copy `.env.example` to `.env` 
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | `pk.eyJ1IjoibG9jYWZ5...` | Mapbox public access token |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | `pk.eyJ1IjoibG9jYWZ5...` | Mapbox public token — **required** for `/customer/map`, `/delivery/orders/[id]`, and live tracking on `/customer/orders/[id]`. Set in `frontend/.env.local` only. |
 
 ### Razorpay
 

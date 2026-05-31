@@ -75,6 +75,7 @@ public class OrderDto {
         private String customerId;
         private String shopId;
         private String shopName;
+        private String deliveryPartnerId;
         private List<OrderItemResponse> items;
         private Double subtotal;
         private Double deliveryFee;
@@ -96,6 +97,7 @@ public class OrderDto {
                     .customerId(order.getCustomerId())
                     .shopId(order.getShopId())
                     .shopName(order.getShopName())
+                    .deliveryPartnerId(order.getDeliveryPartnerId())
                     .items(order.getItems().stream().map(OrderItemResponse::from).toList())
                     .subtotal(order.getSubtotal())
                     .deliveryFee(order.getDeliveryFee())
@@ -144,14 +146,25 @@ public class OrderDto {
         private String line2;
         private String city;
         private String pincode;
+        private Double latitude;
+        private Double longitude;
 
         public static DeliveryAddressResponse from(Order.DeliveryAddress addr) {
+            Double lat = null;
+            Double lng = null;
+            if (addr.getCoordinates() != null && addr.getCoordinates().getCoordinates() != null
+                    && addr.getCoordinates().getCoordinates().length >= 2) {
+                lng = addr.getCoordinates().getCoordinates()[0];
+                lat = addr.getCoordinates().getCoordinates()[1];
+            }
             return DeliveryAddressResponse.builder()
                     .label(addr.getLabel())
                     .line1(addr.getLine1())
                     .line2(addr.getLine2())
                     .city(addr.getCity())
                     .pincode(addr.getPincode())
+                    .latitude(lat)
+                    .longitude(lng)
                     .build();
         }
     }

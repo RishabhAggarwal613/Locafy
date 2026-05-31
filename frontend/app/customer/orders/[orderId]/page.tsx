@@ -2,17 +2,22 @@
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import CustomerShell from '@/components/customer/CustomerShell'
 import OrderStatusTimeline from '@/components/customer/OrderStatusTimeline'
+import DeliveryRouteMap from '@/components/delivery/DeliveryRouteMap'
 import { ordersApi } from '@/lib/api/orders'
 import { useAuthStore } from '@/store/authStore'
+import { useCustomerDeliveryTracking } from '@/lib/hooks/useDeliveryTracking'
 
 export default function OrderDetailPage() {
   const { orderId } = useParams<{ orderId: string }>()
   const queryClient = useQueryClient()
   const { user } = useAuthStore()
+  const [partnerLat, setPartnerLat] = useState<number>()
+  const [partnerLng, setPartnerLng] = useState<number>()
 
   const { data: order, isLoading } = useQuery({
     queryKey: ['order', orderId],
@@ -27,6 +32,15 @@ export default function OrderDetailPage() {
       queryClient.invalidateQueries({ queryKey: ['order', orderId] })
     },
     onError: () => toast.error('Could not cancel order'),
+  })
+
+  const showTracking = !!order
+    && order.fulfillmentType === 'DELIVERY'
+    && ['PICKED_UP', 'OUT_FOR_DELIVERY'].includes(order.status)
+
+  useCustomerDeliveryTracking(order?.id, showTracking, (lat, lng) => {
+    setPartnerLat(lat)
+    setPartnerLng(lng)
   })
 
   if (!user) {
@@ -95,6 +109,19 @@ export default function OrderDetailPage() {
           <h2 className="font-semibold text-gray-900 mb-4">Order timeline</h2>
           <OrderStatusTimeline history={order.statusHistory} />
         </section>
+
+        {showTracking && (
+          <section className="lg:col-span-2 bg-white rounded-xl border border-gray-100 p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Live delivery tracking</h2>
+            <p className="text-sm text-gray-500 mb-4">Your delivery partner&apos;s location updates in real time.</p>
+            <DeliveryRouteMap
+              customerLat={order.deliveryAddress?.latitude}
+              customerLng={order.deliveryAddress?.longitude}
+              partnerLat={partnerLat}
+              partnerLng={partnerLng}
+            />
+          </section>
+        )}
       </div>
     </CustomerShell>
   )

@@ -9,7 +9,7 @@ export function useVendorOrderAlerts(shopId?: string, onNewOrder?: () => void) {
   useEffect(() => {
     if (!shopId) return
 
-    const wsUrl = `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'}/ws`
+    const wsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8080'}/ws`
     const client = new Client({
       webSocketFactory: () => new SockJS(wsUrl) as WebSocket,
       reconnectDelay: 5000,

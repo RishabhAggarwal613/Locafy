@@ -268,6 +268,9 @@ public class OrderService {
         order.setStatusHistory(history);
         order = orderRepository.save(order);
         notificationService.notifyOrderStatusUpdate(order);
+        if (status == Order.OrderStatus.READY && order.getFulfillmentType() == Order.FulfillmentType.DELIVERY) {
+            notificationService.notifyDeliveryPool(order);
+        }
         return OrderDto.OrderResponse.from(order);
     }
 

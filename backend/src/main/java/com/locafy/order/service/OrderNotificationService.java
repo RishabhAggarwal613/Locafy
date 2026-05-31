@@ -33,4 +33,36 @@ public class OrderNotificationService {
                 "/topic/orders/" + order.getId(),
                 OrderDto.OrderResponse.from(order));
     }
+
+    public void notifyDeliveryPool(Order order) {
+        if (order.getFulfillmentType() != Order.FulfillmentType.DELIVERY
+                || order.getStatus() != Order.OrderStatus.READY
+                || order.getDeliveryPartnerId() != null) {
+            return;
+        }
+        messagingTemplate.convertAndSend(
+                "/topic/delivery/pool",
+                Map.of(
+                        "type", "ORDER_AVAILABLE",
+                        "orderId", order.getId(),
+                        "orderNumber", order.getOrderNumber(),
+                        "shopId", order.getShopId(),
+                        "shopName", order.getShopName(),
+                        "deliveryFee", order.getDeliveryFee() != null ? order.getDeliveryFee() : 0,
+                        "total", order.getTotal()
+                ));
+    }
+
+    public void broadcastDeliveryLocation(String orderId, String partnerId, double lat, double lng) {
+        messagingTemplate.convertAndSend(
+                "/topic/delivery/" + orderId,
+                Map.of(
+                        "type", "LOCATION_UPDATE",
+                        "orderId", orderId,
+                        "partnerId", partnerId,
+                        "latitude", lat,
+                        "longitude", lng,
+                        "timestamp", java.time.Instant.now().toString()
+                ));
+    }
 }

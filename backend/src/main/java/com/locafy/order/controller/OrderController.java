@@ -20,6 +20,7 @@ import java.util.Map;
 public class OrderController {
 
     private final OrderService orderService;
+    private final com.locafy.delivery.service.DeliveryService deliveryService;
 
     @PostMapping
     @PreAuthorize("hasRole('CUSTOMER')")
@@ -69,6 +70,16 @@ public class OrderController {
             @RequestBody(required = false) Map<String, String> body) {
         String reason = body != null ? body.get("reason") : null;
         return ResponseEntity.ok(orderService.cancelOrder(customerId, id, reason));
+    }
+
+    @GetMapping("/{id}/location")
+    @PreAuthorize("hasAnyRole('CUSTOMER','DELIVERY')")
+    public ResponseEntity<com.locafy.delivery.dto.DeliveryDto.LocationResponse> getOrderLocation(
+            @AuthenticationPrincipal String userId,
+            @PathVariable String id) {
+        boolean isDelivery = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_DELIVERY"));
+        return ResponseEntity.ok(deliveryService.getLocationForOrder(id, userId, isDelivery));
     }
 
     @PutMapping("/{id}/status")
