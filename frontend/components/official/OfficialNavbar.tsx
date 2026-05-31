@@ -28,10 +28,14 @@ export default function OfficialNavbar() {
     setMenuOpen(false)
   }, [pathname])
 
+  const onDarkHero = !scrolled
+
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        scrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-sm'
+          : 'bg-gray-950/30 backdrop-blur-sm'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -40,7 +44,13 @@ export default function OfficialNavbar() {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-md group-hover:bg-indigo-700 transition-colors">
             <span className="text-white font-black text-sm tracking-tight">L</span>
           </div>
-          <span className="font-black text-xl text-gray-900 tracking-tight">Locafy</span>
+          <span
+            className={`font-black text-xl tracking-tight transition-colors ${
+              onDarkHero ? 'text-white' : 'text-gray-900'
+            }`}
+          >
+            Locafy
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -51,17 +61,21 @@ export default function OfficialNavbar() {
               <Link
                 key={href}
                 href={href}
-                className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                className={`relative px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                   isActive
-                    ? 'text-indigo-600'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? onDarkHero ? 'text-white' : 'text-indigo-600'
+                    : onDarkHero
+                      ? 'text-white/90 hover:text-white hover:bg-white/10'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
                 {label}
                 {isActive && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-indigo-600 rounded-full"
+                    className={`absolute bottom-0 left-3 right-3 h-0.5 rounded-full ${
+                      onDarkHero ? 'bg-white' : 'bg-indigo-600'
+                    }`}
                   />
                 )}
               </Link>
@@ -72,14 +86,22 @@ export default function OfficialNavbar() {
         {/* CTA + Hamburger */}
         <div className="flex items-center gap-3">
           <Link
-            href="/customer/auth/login"
-            className="hidden md:inline-flex items-center gap-1 bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+            href="/customer/auth"
+            className={`hidden md:inline-flex items-center gap-1 text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm ${
+              onDarkHero
+                ? 'bg-white text-indigo-700 hover:bg-indigo-50'
+                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+            }`}
           >
             Get Started
           </Link>
           <button
             onClick={() => setMenuOpen(v => !v)}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              onDarkHero
+                ? 'text-white hover:bg-white/10'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
             aria-label="Toggle menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +143,7 @@ export default function OfficialNavbar() {
                 )
               })}
               <Link
-                href="/customer/auth/login"
+                href="/customer/auth"
                 className="mt-2 bg-indigo-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg text-center hover:bg-indigo-700 transition-colors"
               >
                 Get Started

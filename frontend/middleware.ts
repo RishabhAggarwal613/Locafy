@@ -1,56 +1,38 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const ROLE_ROUTES: Record<string, string[]> = {
-  VENDOR: ['/vendor/dashboard', '/vendor/shop', '/vendor/products', '/vendor/reels', '/vendor/orders', '/vendor/history', '/vendor/finance'],
-  DELIVERY: ['/delivery/dashboard', '/delivery/orders', '/delivery/history', '/delivery/finance'],
-  ADMIN: ['/admin/dashboard', '/admin/users', '/admin/shops', '/admin/orders', '/admin/analytics'],
-  CUSTOMER: ['/cart', '/checkout', '/orders', '/profile', '/reels'],
-}
-
-const AUTH_REDIRECTS: Record<string, string> = {
-  '/vendor/dashboard': '/vendor/auth/login',
-  '/delivery/dashboard': '/delivery/auth/login',
-  '/admin/dashboard': '/admin/auth/login',
-  '/cart': '/auth/login',
-}
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-
-  // Read auth token from cookie (set by backend on login)
   const token = request.cookies.get('locafy-token')?.value
 
-  // Check protected vendor routes
-  if (pathname.startsWith('/vendor/dashboard') ||
-      pathname.startsWith('/vendor/shop') ||
-      pathname.startsWith('/vendor/products') ||
-      pathname.startsWith('/vendor/reels') && !pathname.includes('/vendor/reels/') ||
-      pathname.startsWith('/vendor/orders') ||
-      pathname.startsWith('/vendor/finance')) {
-    if (!token) {
-      return NextResponse.redirect(new URL('/vendor/auth/login', request.url))
-    }
-  }
+  const protectedPrefixes: { prefix: string; authPath: string }[] = [
+    { prefix: '/vendor/dashboard', authPath: '/vendor/auth' },
+    { prefix: '/vendor/shop', authPath: '/vendor/auth' },
+    { prefix: '/vendor/products', authPath: '/vendor/auth' },
+    { prefix: '/vendor/reels', authPath: '/vendor/auth' },
+    { prefix: '/vendor/orders', authPath: '/vendor/auth' },
+    { prefix: '/vendor/history', authPath: '/vendor/auth' },
+    { prefix: '/vendor/finance', authPath: '/vendor/auth' },
+    { prefix: '/delivery/dashboard', authPath: '/delivery/auth' },
+    { prefix: '/delivery/orders', authPath: '/delivery/auth' },
+    { prefix: '/delivery/history', authPath: '/delivery/auth' },
+    { prefix: '/delivery/finance', authPath: '/delivery/auth' },
+    { prefix: '/admin/dashboard', authPath: '/admin/auth' },
+    { prefix: '/admin/users', authPath: '/admin/auth' },
+    { prefix: '/admin/shops', authPath: '/admin/auth' },
+    { prefix: '/admin/orders', authPath: '/admin/auth' },
+    { prefix: '/admin/analytics', authPath: '/admin/auth' },
+    { prefix: '/customer/cart', authPath: '/customer/auth' },
+    { prefix: '/customer/checkout', authPath: '/customer/auth' },
+    { prefix: '/customer/orders', authPath: '/customer/auth' },
+    { prefix: '/customer/profile', authPath: '/customer/auth' },
+  ]
 
-  // Check protected delivery routes
-  if (pathname.startsWith('/delivery/dashboard') ||
-      pathname.startsWith('/delivery/orders') ||
-      pathname.startsWith('/delivery/history') ||
-      pathname.startsWith('/delivery/finance')) {
-    if (!token) {
-      return NextResponse.redirect(new URL('/delivery/auth/login', request.url))
-    }
-  }
-
-  // Check protected admin routes
-  if (pathname.startsWith('/admin/dashboard') ||
-      pathname.startsWith('/admin/users') ||
-      pathname.startsWith('/admin/shops') ||
-      pathname.startsWith('/admin/orders') ||
-      pathname.startsWith('/admin/analytics')) {
-    if (!token) {
-      return NextResponse.redirect(new URL('/admin/auth/login', request.url))
+  for (const { prefix, authPath } of protectedPrefixes) {
+    if (pathname.startsWith(prefix) && !pathname.startsWith(`${authPath}`)) {
+      if (!token) {
+        return NextResponse.redirect(new URL(authPath, request.url))
+      }
     }
   }
 
@@ -62,9 +44,9 @@ export const config = {
     '/vendor/:path*',
     '/delivery/:path*',
     '/admin/:path*',
-    '/cart',
-    '/checkout/:path*',
-    '/orders/:path*',
-    '/profile/:path*',
+    '/customer/cart',
+    '/customer/checkout/:path*',
+    '/customer/orders/:path*',
+    '/customer/profile/:path*',
   ],
 }

@@ -15,7 +15,7 @@ interface Props {
 
 export function GoogleSignInButton({ role, redirectTo, label = 'Continue with Google' }: Props) {
   const { data: session, status } = useSession()
-  const { googleLogin } = useAuth()
+  const { googleLogin, clearAuth } = useAuth()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [triggered, setTriggered] = useState(false)
@@ -25,7 +25,14 @@ export function GoogleSignInButton({ role, redirectTo, label = 'Continue with Go
     if (triggered && status === 'authenticated' && session?.googleIdToken) {
       setLoading(true)
       googleLogin(session.googleIdToken, role)
-        .then(() => {
+        .then((data) => {
+          if (data.user.role !== role) {
+            clearAuth()
+            toast.error(`This Google account is registered as ${data.user.role.toLowerCase()}. Use the correct app to sign in.`)
+            setLoading(false)
+            setTriggered(false)
+            return
+          }
           toast.success('Signed in with Google!')
           router.push(redirectTo)
         })

@@ -104,13 +104,13 @@ export default function DeliveryMarketingPage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Link
-                href="/delivery/auth/signup"
+                href="/delivery/auth?mode=signup"
                 className="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-amber-900/40"
               >
                 Become a Delivery Partner →
               </Link>
               <Link
-                href="/delivery/auth/login"
+                href="/delivery/auth"
                 className="inline-flex items-center justify-center border border-amber-400/50 text-amber-200 hover:border-amber-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
               >
                 Sign In
@@ -215,7 +215,7 @@ export default function DeliveryMarketingPage() {
           <h2 className="text-4xl font-black text-white mb-4">Join as Delivery Partner</h2>
           <p className="text-amber-100 mb-8 text-lg">Earn ₹15,000–₹30,000/month. Flexible hours. Daily payout.</p>
           <Link
-            href="/delivery/auth/signup"
+            href="/delivery/auth?mode=signup"
             className="inline-flex items-center gap-2 bg-white text-amber-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-amber-50 transition-colors"
           >
             Join as Delivery Partner →

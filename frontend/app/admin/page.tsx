@@ -108,7 +108,7 @@ export default function AdminMarketingPage() {
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <Link
-              href="/admin/auth/login"
+              href="/admin/auth"
               className="inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-400 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-rose-900/40"
             >
               Admin Portal →
@@ -202,7 +202,7 @@ export default function AdminMarketingPage() {
             Admin access is restricted. If you are a platform operator, sign in below.
           </p>
           <Link
-            href="/admin/auth/login"
+            href="/admin/auth"
             className="inline-flex items-center gap-2 bg-rose-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-rose-400 transition-colors"
           >
             Go to Admin Portal →

@@ -1,5 +1,5 @@
 import apiClient from './client'
-import type { PageResponse, Product, Shop } from '@/types'
+import type { PageResponse, Product, Shop, ShopPageResponse } from '@/types'
 
 export interface CreateShopPayload {
   name: string
@@ -28,6 +28,18 @@ export type UpdateShopPayload = Partial<Omit<CreateShopPayload, 'categories'>> &
 }
 
 export const shopsApi = {
+  listNearby: (params: {
+    lat: number
+    lng: number
+    radius?: number
+    category?: string
+    q?: string
+    open?: boolean
+    delivery?: boolean
+    page?: number
+    size?: number
+  }) => apiClient.get<ShopPageResponse>('/api/shops', { params }).then((r) => r.data),
+
   getById: (id: string) =>
     apiClient.get<Shop>(`/api/shops/${id}`).then((r) => r.data),
 

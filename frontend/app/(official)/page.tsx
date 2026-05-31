@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import OfficialNavbar from '@/components/official/OfficialNavbar'
 import OfficialFooter from '@/components/official/OfficialFooter'
-import { AnimatedSection, AnimatedStagger } from '@/components/official/AnimatedSection'
+import { AnimatedSection } from '@/components/official/AnimatedSection'
 import StatsSection from '@/components/official/StatsCounter'
 
 const Hero3D = dynamic(() => import('@/components/official/Hero3D'), { ssr: false })
@@ -189,14 +189,14 @@ export default function HomePage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/customer/auth/signup"
+                href="/customer/auth?mode=signup"
                 className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-indigo-900/30"
               >
                 Find Shops Near Me
                 <span>→</span>
               </Link>
               <Link
-                href="/vendor/auth/signup"
+                href="/vendor/auth?mode=signup"
                 className="inline-flex items-center justify-center gap-2 border border-gray-600 text-gray-300 hover:border-indigo-500 hover:text-indigo-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
               >
                 List Your Shop
@@ -414,13 +414,13 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/customer/auth/signup"
+              href="/customer/auth?mode=signup"
               className="bg-white text-indigo-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-indigo-50 transition-colors"
             >
               Get Started Free
             </Link>
             <Link
-              href="/vendor/auth/signup"
+              href="/vendor/auth?mode=signup"
               className="border border-indigo-400 text-white font-medium px-8 py-4 rounded-xl text-lg hover:bg-indigo-500 transition-colors"
             >
               List Your Shop

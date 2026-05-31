@@ -1,5 +1,7 @@
 package com.locafy.product.controller;
 
+import com.locafy.search.dto.SearchDto;
+import com.locafy.search.service.SearchService;
 import com.locafy.product.dto.ProductDto;
 import com.locafy.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -21,6 +23,16 @@ import java.util.Map;
 public class ProductController {
 
     private final ProductService productService;
+    private final SearchService searchService;
+
+    @GetMapping("/api/products/recent")
+    public ResponseEntity<List<SearchDto.ProductSearchItem>> recentProducts(
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam(defaultValue = "5") double radius,
+            @RequestParam(defaultValue = "12") int limit) {
+        return ResponseEntity.ok(searchService.recentProducts(lat, lng, radius, limit));
+    }
 
     @GetMapping("/api/products/{id}")
     public ResponseEntity<ProductDto.ProductResponse> getProduct(@PathVariable String id) {

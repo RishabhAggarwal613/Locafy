@@ -1,6 +1,8 @@
 package com.locafy.shop.controller;
 
+import com.locafy.shop.dto.ShopDiscoveryDto;
 import com.locafy.shop.dto.ShopDto;
+import com.locafy.shop.service.ShopDiscoveryService;
 import com.locafy.shop.service.ShopService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,22 @@ import java.io.IOException;
 public class ShopController {
 
     private final ShopService shopService;
+    private final ShopDiscoveryService shopDiscoveryService;
+
+    @GetMapping
+    public ResponseEntity<ShopDiscoveryDto.ShopPageResponse> listShops(
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam(defaultValue = "5") double radius,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) Boolean open,
+            @RequestParam(required = false) Boolean delivery,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return ResponseEntity.ok(shopDiscoveryService.findNearby(
+                lat, lng, radius, category, q, open, delivery, page, size));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ShopDto.ShopResponse> getShop(@PathVariable String id) {

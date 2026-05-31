@@ -53,6 +53,8 @@ public class ShopDto {
 
     @Data
     @lombok.Builder
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
     public static class ShopResponse {
         private String id;
         private String ownerId;
@@ -127,6 +129,8 @@ public class ShopDto {
 
     @Data
     @lombok.Builder
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
     public static class AddressResponse {
         private String line1;
         private String line2;
@@ -137,6 +141,8 @@ public class ShopDto {
 
     @Data
     @lombok.Builder
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
     public static class LocationResponse {
         private String type;
         private double[] coordinates;

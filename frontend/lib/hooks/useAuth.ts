@@ -55,5 +55,5 @@ export function useAuth() {
     }
   }
 
-  return { user, accessToken, isLoggedIn: !!user, signup, login, googleLogin, logout, refreshToken }
+  return { user, accessToken, isLoggedIn: !!user, signup, login, googleLogin, logout, refreshToken, clearAuth }
 }

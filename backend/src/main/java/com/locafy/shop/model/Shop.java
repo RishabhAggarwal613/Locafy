@@ -29,7 +29,7 @@ public class Shop {
 
     private String name;
 
-    @Indexed(unique = true)
+    @Indexed(unique = true, sparse = true)
     private String slug;
 
     private String description;

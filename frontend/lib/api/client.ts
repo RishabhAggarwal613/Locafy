@@ -2,6 +2,22 @@ import axios from 'axios'
 
 const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'
 
+const AUTH_ENDPOINTS = ['/api/auth/login', '/api/auth/signup', '/api/auth/google', '/api/auth/refresh']
+
+function isAuthRequest(url?: string): boolean {
+  if (!url) return false
+  return AUTH_ENDPOINTS.some((path) => url.includes(path))
+}
+
+function loginRedirectForCurrentPath(): string {
+  if (typeof window === 'undefined') return '/customer/auth'
+  const path = window.location.pathname
+  if (path.startsWith('/vendor')) return '/vendor/auth'
+  if (path.startsWith('/delivery')) return '/delivery/auth'
+  if (path.startsWith('/admin')) return '/admin/auth'
+  return '/customer/auth'
+}
+
 export const apiClient = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
@@ -23,13 +39,16 @@ apiClient.interceptors.request.use((config) => {
   return config
 })
 
-// On 401, clear auth state
+// On 401, clear auth state (skip auth endpoints so login errors can be shown)
 apiClient.interceptors.response.use(
   (res) => res,
   async (error) => {
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
+    const requestUrl = error.config?.url as string | undefined
+
+    if (error.response?.status === 401 && typeof window !== 'undefined' && !isAuthRequest(requestUrl)) {
       localStorage.removeItem('locafy-auth')
-      window.location.href = '/auth/login'
+      document.cookie = 'locafy-token=; path=/; max-age=0'
+      window.location.href = loginRedirectForCurrentPath()
     }
     return Promise.reject(error)
   }

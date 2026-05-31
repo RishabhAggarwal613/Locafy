@@ -114,13 +114,13 @@ export default function VendorMarketingPage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/vendor/auth/signup"
+                href="/vendor/auth?mode=signup"
                 className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-emerald-900/40"
               >
                 Join as a Vendor →
               </Link>
               <Link
-                href="/vendor/auth/login"
+                href="/vendor/auth"
                 className="inline-flex items-center justify-center border border-emerald-400/50 text-emerald-200 hover:border-emerald-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
               >
                 Sign In
@@ -198,7 +198,7 @@ export default function VendorMarketingPage() {
           <h2 className="text-4xl font-black text-white mb-4">Start Selling on Locafy</h2>
           <p className="text-emerald-100 mb-8 text-lg">Free for 3 months. No credit card needed. Cancel anytime.</p>
           <Link
-            href="/vendor/auth/signup"
+            href="/vendor/auth?mode=signup"
             className="inline-flex items-center gap-2 bg-white text-emerald-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-50 transition-colors"
           >
             Start Selling on Locafy →

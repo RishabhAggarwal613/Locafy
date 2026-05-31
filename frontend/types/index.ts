@@ -67,6 +67,19 @@ export interface Shop {
   minOrderAmount?: number
   deliveryRadius?: number
   distance?: number
+  distanceKm?: number
+}
+
+export interface ShopListItem extends Shop {
+  distanceKm?: number
+}
+
+export interface ShopPageResponse {
+  content: ShopListItem[]
+  totalElements: number
+  page: number
+  size: number
+  hasMore: boolean
 }
 
 export interface ShopAddress {
@@ -88,6 +101,7 @@ export interface Product {
   stock: number
   isAvailable: boolean
   unit: string
+  sku?: string
   rating: number
   reviewCount: number
 }
@@ -101,11 +115,19 @@ export interface Order {
   items: OrderItem[]
   subtotal: number
   deliveryFee: number
+  platformFee?: number
   total: number
   fulfillmentType: FulfillmentType
   status: OrderStatus
   paymentMethod: PaymentMethod
   paymentStatus: PaymentStatus
+  deliveryAddress?: {
+    label?: string
+    line1: string
+    line2?: string
+    city: string
+    pincode: string
+  }
   statusHistory: StatusHistoryEntry[]
   createdAt: string
 }

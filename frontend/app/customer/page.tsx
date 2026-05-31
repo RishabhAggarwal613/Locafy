@@ -117,14 +117,20 @@ export default function CustomerMarketingPage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/customer/auth/signup"
+                href="/customer/explore"
                 className="inline-flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-indigo-900/40"
               >
-                Get Started as Customer →
+                Explore Nearby Shops →
               </Link>
               <Link
-                href="/customer/auth/login"
-                className="inline-flex items-center justify-center border border-indigo-400/50 text-indigo-200 hover:border-indigo-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
+                href="/customer/auth?mode=signup"
+                className="inline-flex items-center justify-center gap-2 border border-indigo-400/50 text-indigo-200 hover:border-indigo-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
+              >
+                Get Started
+              </Link>
+              <Link
+                href="/customer/auth"
+                className="inline-flex items-center justify-center border border-indigo-400/30 text-indigo-300/80 hover:border-indigo-300 font-medium px-8 py-4 rounded-xl text-lg transition-colors"
               >
                 Sign In
               </Link>
@@ -191,10 +197,10 @@ export default function CustomerMarketingPage() {
           <h2 className="text-4xl font-black text-white mb-4">Start shopping locally today</h2>
           <p className="text-indigo-200 mb-8 text-lg">Free to join. No minimum order. Local shops, fast delivery.</p>
           <Link
-            href="/customer/auth/signup"
+            href="/customer/explore"
             className="inline-flex items-center gap-2 bg-white text-indigo-600 font-bold px-8 py-4 rounded-xl text-lg hover:bg-indigo-50 transition-colors"
           >
-            Open Customer App →
+            Explore Nearby Shops →
           </Link>
         </AnimatedSection>
       </section>

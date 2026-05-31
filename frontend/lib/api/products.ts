@@ -1,5 +1,6 @@
 import apiClient from './client'
 import type { PageResponse, Product } from '@/types'
+import type { ProductSearchItem } from './search'
 
 export interface CreateProductPayload {
   name: string
@@ -19,6 +20,11 @@ export interface CreateProductPayload {
 export type UpdateProductPayload = Partial<CreateProductPayload>
 
 export const productsApi = {
+  recent: (lat: number, lng: number, radius = 5, limit = 12) =>
+    apiClient.get<ProductSearchItem[]>('/api/products/recent', {
+      params: { lat, lng, radius, limit },
+    }).then((r) => r.data),
+
   getById: (id: string) =>
     apiClient.get<Product>(`/api/products/${id}`).then((r) => r.data),
 
