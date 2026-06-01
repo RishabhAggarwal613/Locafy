@@ -64,6 +64,14 @@ public class Product {
     @Builder.Default
     private Integer reviewCount = 0;
 
+    @Builder.Default
+    private Boolean isFlagged = false;
+
+    private String flagReason;
+
+    @Builder.Default
+    private Integer flagCount = 0;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

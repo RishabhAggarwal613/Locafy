@@ -29,4 +29,7 @@ public class Category {
 
     @Builder.Default
     private Integer displayOrder = 0;
+
+    @Builder.Default
+    private Boolean isActive = true;
 }

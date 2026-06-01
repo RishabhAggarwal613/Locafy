@@ -211,7 +211,30 @@ echo "▶ Reels"
 req GET /api/reels/mine "$VENDOR_TOKEN"
 [[ "$(code)" == "200" ]] && ok "Vendor reel list" || fail "Vendor reels (HTTP $(code))"
 
-# ── 8. Frontend pages ────────────────────────
+# ── 8. Admin (Phase 10) ──────────────────────
+echo ""
+echo "▶ Admin"
+req POST /api/auth/login "" '{"email":"admin@locafy.in","password":"Admin1234"}'
+if [[ "$(code)" == "200" ]]; then
+  ok "Admin login"
+  ADMIN_TOKEN=$(extract "d.get('accessToken','')")
+  req GET /api/admin/analytics "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin analytics" || fail "Admin analytics (HTTP $(code))"
+  req GET /api/admin/users "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin list users" || fail "Admin users (HTTP $(code))"
+  req GET /api/admin/shops "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin list shops" || fail "Admin shops (HTTP $(code))"
+  req GET /api/admin/orders "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin list orders" || fail "Admin orders (HTTP $(code))"
+  req GET /api/admin/categories "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin categories" || fail "Admin categories (HTTP $(code))"
+  req GET /api/admin/settings "$ADMIN_TOKEN"
+  [[ "$(code)" == "200" ]] && ok "Admin settings" || fail "Admin settings (HTTP $(code))"
+else
+  skip "Admin login (seed admin@locafy.in or set ADMIN_INITIAL_PASSWORD)"
+fi
+
+# ── 9. Frontend pages ────────────────────────
 echo ""
 echo "▶ Frontend pages (HTTP status)"
 FE="${FRONTEND_URL:-http://localhost:3000}"
@@ -221,7 +244,7 @@ for path in / /customer/explore /customer/reels /customer/search /customer/map /
 done
 
 # Protected pages may redirect
-for path in /customer/orders /customer/cart /vendor/orders; do
+for path in /customer/orders /customer/cart /vendor/orders /admin/dashboard; do
   code=$(curl -s -o /dev/null -w "%{http_code}" "${FE}${path}" 2>/dev/null || echo "000")
   [[ "$code" == "200" || "$code" == "307" || "$code" == "308" ]] && ok "Page $path ($code)" || fail "Page $path (HTTP $code)"
 done

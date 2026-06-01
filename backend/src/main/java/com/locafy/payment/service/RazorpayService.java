@@ -66,6 +66,25 @@ public class RazorpayService {
         return constantTimeEquals(expected, signature);
     }
 
+    public String refundPayment(String razorpayPaymentId, double amountInRupees) {
+        if (!isConfigured()) {
+            throw new BusinessException("Razorpay is not configured");
+        }
+        if (!StringUtils.hasText(razorpayPaymentId)) {
+            throw new BusinessException("No Razorpay payment ID on order");
+        }
+        try {
+            RazorpayClient client = new RazorpayClient(keyId, keySecret);
+            JSONObject options = new JSONObject();
+            options.put("amount", Math.round(amountInRupees * 100));
+            com.razorpay.Refund refund = client.payments.refund(razorpayPaymentId, options);
+            return refund.get("id");
+        } catch (RazorpayException e) {
+            log.error("Razorpay refund failed", e);
+            throw new BusinessException("Refund failed: " + e.getMessage());
+        }
+    }
+
     private String hmacSha256(String data, String secret) {
         try {
             Mac mac = Mac.getInstance("HmacSHA256");

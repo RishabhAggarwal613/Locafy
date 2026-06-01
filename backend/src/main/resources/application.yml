@@ -76,6 +76,8 @@ twilio:
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
   platform-fee-percent: ${PLATFORM_FEE_PERCENT:10}
+  admin:
+    initial-password: ${ADMIN_INITIAL_PASSWORD:Admin1234}
 
 logging:
   level:

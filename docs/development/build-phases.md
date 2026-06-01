@@ -16,11 +16,11 @@ Locafy is a large application. This document breaks the build into 11 sequential
 | 6 — Cart, Orders, Payments | ✅ Complete | Razorpay + COD, vendor order alerts |
 | 7 — Delivery | ✅ Complete | Order pool, GPS, customer live map (no turn-by-turn nav page) |
 | 8 — Reels | ✅ Complete | HLS upload, geo feed, like/save, Reel Studio |
-| 9 — Real-time | 🔄 Partial | Vendor alerts + delivery GPS done; customer order WS pending |
-| 10 — Admin | ⬜ Not started | Dashboard stub only |
+| 9 — Real-time | ✅ Complete | JWT STOMP, Redis relay, live order hooks |
+| 10 — Admin | ✅ Complete | Dashboard, users/shops/orders, categories, settings, audit log |
 | 11 — Polish | ⬜ Not started | — |
 
-**Latest commit on `main`:** Phase 8 reels (`478a5fe`). **Next:** Phase 9 — customer-facing order status WebSocket.
+**Latest commit on `main`:** Phase 9 real-time (`05bad79`). **Next:** Phase 11 — polish & production readiness.
 
 ---
 
@@ -193,44 +193,46 @@ Locafy is a large application. This document breaks the build into 11 sequential
 
 ---
 
-## Phase 9 — Real-time
+## Phase 9 — Real-time ✅
 
 **Goal:** All order status updates and delivery tracking are live via WebSocket.
 
 **Tasks:**
-- [ ] Spring WebSocket + STOMP configuration
-- [ ] Order status WebSocket broadcast on every status change
-- [ ] Vendor new order WebSocket alert
-- [ ] Delivery location WebSocket relay (delivery → customer)
-- [ ] User notification WebSocket queue
-- [ ] Frontend `@stomp/stompjs` client setup
-- [ ] Customer order tracking page with live map
-- [ ] Reconnection handling (exponential backoff)
-- [ ] Redis pub/sub broker relay (for multi-instance scaling)
+- [x] Spring WebSocket + STOMP configuration
+- [x] Order status WebSocket broadcast on every status change
+- [x] Vendor new order WebSocket alert
+- [x] Delivery location WebSocket relay (delivery → customer)
+- [x] User notification WebSocket queue
+- [x] Frontend `@stomp/stompjs` client setup
+- [x] Customer order tracking page with live map
+- [x] Reconnection handling (exponential backoff)
+- [x] Redis pub/sub broker relay (for multi-instance scaling)
 
 **Deliverable:** Order status and delivery location update in real-time without page refresh.
 
 ---
 
-## Phase 10 — Admin Dashboard
+## Phase 10 — Admin Dashboard ✅
 
 **Goal:** Admin has full platform control.
 
 **Tasks:**
-- [ ] Admin-only security (`hasRole('ADMIN')`)
-- [ ] `GET /api/admin/users` + status update
-- [ ] `GET /api/admin/shops` + verify/suspend
-- [ ] `GET /api/admin/orders` + status override + refund
-- [ ] `POST/PUT /api/admin/categories`
-- [ ] Admin analytics aggregation endpoint
-- [ ] Admin dashboard page (summary stats, pending actions)
-- [ ] Customer, vendor, delivery partner management tables
-- [ ] Order oversight table
-- [ ] Product moderation queue
-- [ ] Platform settings page (fee %, delivery config)
-- [ ] Audit log model + recording on every admin action
+- [x] Admin-only security (`hasRole('ADMIN')`)
+- [x] `GET /api/admin/users` + status update
+- [x] `GET /api/admin/shops` + verify/suspend
+- [x] `GET /api/admin/orders` + status override + refund
+- [x] `POST/PUT /api/admin/categories`
+- [x] Admin analytics aggregation endpoint
+- [x] Admin dashboard page (summary stats, pending actions)
+- [x] Customer, vendor, delivery partner management tables
+- [x] Order oversight table
+- [x] Product moderation queue
+- [x] Platform settings page (fee %, delivery config)
+- [x] Audit log model + recording on every admin action
 
 **Deliverable:** Admins can manage the entire platform.
+
+**Default admin (dev):** `admin@locafy.in` / `Admin1234` (override via `ADMIN_INITIAL_PASSWORD`)
 
 ---
 

@@ -18,6 +18,7 @@ public class CategoryDto {
     private String parentCategory;
     private String type;
     private Integer displayOrder;
+    private Boolean isActive;
 
     public static CategoryDto from(Category c) {
         return CategoryDto.builder()
@@ -28,6 +29,7 @@ public class CategoryDto {
                 .parentCategory(c.getParentCategory())
                 .type(c.getType())
                 .displayOrder(c.getDisplayOrder())
+                .isActive(c.getIsActive())
                 .build();
     }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface DeliveryProfileRepository extends MongoRepository<DeliveryProfile, String> {
     Optional<DeliveryProfile> findByUserId(String userId);
+    long countByIsOnlineTrue();
 }

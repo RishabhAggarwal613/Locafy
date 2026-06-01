@@ -15,4 +15,6 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     long countByShopId(String shopId);
     long countByShopIdAndIsAvailableTrue(String shopId);
     Optional<Product> findByIdAndVendorId(String id, String vendorId);
+    Page<Product> findByIsFlaggedTrueOrderByUpdatedAtDesc(Pageable pageable);
+    long countByIsFlaggedTrue();
 }

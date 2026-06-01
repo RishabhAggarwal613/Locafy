@@ -34,4 +34,9 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     long countByDeliveryPartnerIdAndStatus(String deliveryPartnerId, Order.OrderStatus status);
 
     Optional<Order> findByIdAndDeliveryPartnerId(String id, String deliveryPartnerId);
+
+    Page<Order> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    Page<Order> findByStatusOrderByCreatedAtDesc(Order.OrderStatus status, Pageable pageable);
+    long countByCreatedAtAfter(LocalDateTime after);
+    List<Order> findByCreatedAtAfter(LocalDateTime after);
 }
