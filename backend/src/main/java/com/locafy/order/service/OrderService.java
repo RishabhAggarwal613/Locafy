@@ -4,6 +4,7 @@ import com.locafy.cart.service.CartService;
 import com.locafy.common.exception.BusinessException;
 import com.locafy.common.exception.ResourceNotFoundException;
 import com.locafy.common.exception.UnauthorizedException;
+import com.locafy.notification.service.EmailNotificationService;
 import com.locafy.order.dto.OrderDto;
 import com.locafy.order.model.Order;
 import com.locafy.order.repository.OrderRepository;
@@ -43,6 +44,7 @@ public class OrderService {
     private final CartService cartService;
     private final RazorpayService razorpayService;
     private final OrderNotificationService notificationService;
+    private final EmailNotificationService emailNotificationService;
 
     @Value("${app.platform-fee-percent:10}")
     private double platformFeePercent;
@@ -164,6 +166,7 @@ public class OrderService {
         }
 
         notificationService.notifyVendorNewOrder(order);
+        emailNotificationService.sendOrderConfirmation(order);
         response.order(OrderDto.OrderResponse.from(order));
         return response.build();
     }
@@ -268,6 +271,7 @@ public class OrderService {
         order.setStatusHistory(history);
         order = orderRepository.save(order);
         notificationService.notifyOrderStatusUpdate(order);
+        emailNotificationService.sendOrderStatusUpdate(order);
         if (status == Order.OrderStatus.READY && order.getFulfillmentType() == Order.FulfillmentType.DELIVERY) {
             notificationService.notifyDeliveryPool(order);
         }

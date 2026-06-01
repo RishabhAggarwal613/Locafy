@@ -70,6 +70,9 @@ export const vendorApi = {
   getDashboard: () =>
     apiClient.get<VendorDashboard>('/api/vendors/dashboard').then((r) => r.data),
 
+  getFinanceSummary: () =>
+    apiClient.get<VendorFinanceSummary>('/api/vendors/finance/summary').then((r) => r.data),
+
   getMyShop: () =>
     apiClient.get<Shop>('/api/vendors/me/shop').then((r) => r.data),
 
@@ -86,4 +89,16 @@ export interface VendorDashboard {
   pendingOrders: number
   todayOrders: number
   todayRevenue: number
+}
+
+export interface VendorFinanceSummary {
+  shopId: string
+  shopName: string
+  todayRevenue: number
+  todayOrders: number
+  monthRevenue: number
+  monthOrders: number
+  totalRevenue: number
+  totalOrders: number
+  platformFeesCollected: number
 }

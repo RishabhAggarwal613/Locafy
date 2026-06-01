@@ -5,7 +5,9 @@ import com.locafy.product.service.ProductService;
 import com.locafy.shop.dto.ShopDto;
 import com.locafy.shop.service.ShopService;
 import com.locafy.vendor.dto.VendorDashboardResponse;
+import com.locafy.vendor.dto.VendorFinanceResponse;
 import com.locafy.vendor.service.VendorDashboardService;
+import com.locafy.vendor.service.VendorFinanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,12 +21,18 @@ import org.springframework.web.bind.annotation.*;
 public class VendorController {
 
     private final VendorDashboardService dashboardService;
+    private final VendorFinanceService financeService;
     private final ShopService shopService;
     private final ProductService productService;
 
     @GetMapping("/dashboard")
     public ResponseEntity<VendorDashboardResponse> getDashboard(@AuthenticationPrincipal String vendorId) {
         return ResponseEntity.ok(dashboardService.getDashboard(vendorId));
+    }
+
+    @GetMapping("/finance/summary")
+    public ResponseEntity<VendorFinanceResponse> getFinanceSummary(@AuthenticationPrincipal String vendorId) {
+        return ResponseEntity.ok(financeService.getFinanceSummary(vendorId));
     }
 
     @GetMapping("/me/shop")

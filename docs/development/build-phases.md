@@ -18,9 +18,9 @@ Locafy is a large application. This document breaks the build into 11 sequential
 | 8 — Reels | ✅ Complete | HLS upload, geo feed, like/save, Reel Studio |
 | 9 — Real-time | ✅ Complete | JWT STOMP, Redis relay, live order hooks |
 | 10 — Admin | ✅ Complete | Dashboard, users/shops/orders, categories, settings, audit log |
-| 11 — Polish | ⬜ Not started | — |
+| 11 — Polish | 🔄 In progress | CI, rate limits, email, error boundaries, vendor finance |
 
-**Latest commit on `main`:** Phase 9 real-time (`05bad79`). **Next:** Phase 11 — polish & production readiness.
+**Latest commit on `main`:** Phase 10 admin (`0a59c1a`). **Next:** Phase 11 — production polish (remaining items).
 
 ---
 
@@ -236,26 +236,27 @@ Locafy is a large application. This document breaks the build into 11 sequential
 
 ---
 
-## Phase 11 — Polish & Production Readiness
+## Phase 11 — Polish & Production Readiness 🔄
 
 **Goal:** App is production-ready.
 
 **Tasks:**
 - [ ] Push notifications (browser Web Push API)
-- [ ] Email notifications (JavaMailSender — order confirmation, etc.)
+- [x] Email notifications (JavaMailSender — order confirmation, status updates; opt-in via env)
 - [ ] SMS notifications (Twilio — all order events)
-- [ ] Finance dashboards (vendor + delivery partner)
+- [x] Finance dashboards (vendor summary; delivery finance page exists)
 - [ ] Review and rating system
 - [ ] Admin analytics charts (GMV, funnels, heatmap)
 - [ ] Earnings calculation + payout flow
-- [ ] Error boundaries + loading states throughout frontend
-- [ ] Spring Boot error handling + global exception handler
-- [ ] Rate limiting on all public endpoints
+- [x] Error boundaries + shared loading spinner (app-wide via Providers)
+- [x] Spring Boot error handling hardened (prod hides internal errors)
+- [x] Rate limiting on public endpoints (Redis, configurable RPM)
 - [ ] Sentry frontend error tracking
 - [ ] Datadog APM integration (Spring Boot)
-- [ ] Performance: Redis cache warming, query optimization
+- [x] Performance: Redis cache warming on startup
 - [ ] Mobile responsiveness pass on all pages
-- [ ] GitHub Actions CI/CD pipeline
+- [x] GitHub Actions CI/CD pipeline (backend test + frontend build)
+- [x] Backend Dockerfile for EC2 deployment
 - [ ] Production deployment to Vercel + EC2
 - [ ] Production checklist completion (see [production.md](../deployment/production.md))
 

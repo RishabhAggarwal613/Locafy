@@ -76,8 +76,14 @@ twilio:
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
   platform-fee-percent: ${PLATFORM_FEE_PERCENT:10}
+  show-error-details: ${SHOW_ERROR_DETAILS:true}
   admin:
     initial-password: ${ADMIN_INITIAL_PASSWORD:Admin1234}
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    requests-per-minute: ${RATE_LIMIT_RPM:120}
+  notifications:
+    email-enabled: ${EMAIL_NOTIFICATIONS_ENABLED:false}
 
 logging:
   level:

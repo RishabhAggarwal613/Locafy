@@ -1,0 +1,18 @@
+app:
+  show-error-details: false
+  notifications:
+    email-enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  level:
+    com.locafy: INFO
+    org.springframework.security: WARN

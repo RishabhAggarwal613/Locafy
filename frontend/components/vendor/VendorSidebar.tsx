@@ -12,7 +12,7 @@ const NAV = [
   { label: 'Reels', href: '/vendor/reels', icon: '🎬' },
   { label: 'Orders', href: '/vendor/orders', icon: '🛒' },
   { label: 'History', href: '/vendor/history', icon: '📋', disabled: true },
-  { label: 'Finance', href: '/vendor/finance', icon: '💰', disabled: true },
+  { label: 'Finance', href: '/vendor/finance', icon: '💰' },
 ]
 
 export default function VendorSidebar() {

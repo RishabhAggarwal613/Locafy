@@ -1,5 +1,7 @@
 package com.locafy.common.exception;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,7 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+
+    @Value("${app.show-error-details:true}")
+    private boolean showErrorDetails;
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(
@@ -78,7 +84,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneral(
             Exception ex, WebRequest request) {
-        return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", ex.getMessage(), request);
+        log.error("Unhandled exception on {}", request.getDescription(false), ex);
+        String message = showErrorDetails ? ex.getMessage() : "An unexpected error occurred";
+        return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", message, request);
     }
 
     private ResponseEntity<Map<String, Object>> buildError(
