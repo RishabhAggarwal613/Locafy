@@ -21,7 +21,7 @@ Complete list of every technology, library, and tool used in Locafy with version
 | Validation | **Zod** | 3.x | Schema validation on forms and API response types |
 | Maps | **Mapbox GL JS** | 3.x | Shop discovery map, delivery navigation |
 | React Maps | **react-map-gl** | 7.x | Declarative Mapbox in React |
-| Video Player | **Video.js** | 8.x | Reels player with HLS.js for adaptive streaming |
+| Video Player | **hls.js** | 1.x | Reels adaptive HLS playback from Cloudinary (native `<video>` fallback for MP4) |
 | HTTP Client | **Axios** | 1.x | API calls with interceptors for JWT injection |
 | Payments UI | **Razorpay React SDK** | latest | Razorpay checkout embed |
 | Icons | **Lucide React** | latest | Consistent icon set |

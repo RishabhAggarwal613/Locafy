@@ -9,6 +9,16 @@
 
 Locafy connects customers with shops in their immediate locality. Instead of searching a city-wide marketplace, users set their locality and instantly discover shops, products, and deals within walking or short-driving distance. Vendors list their products and upload short video reels. Delivery partners fulfill orders with real-time GPS navigation. Admins manage the entire platform from a central dashboard.
 
+### Build progress (2026-05-31)
+
+| Done | Phase |
+|------|-------|
+| ✅ | 1 Foundation · 2 Auth · 3 Official site · 4 Vendor · 5 Customer · 6 Orders · 7 Delivery · 8 Reels |
+| 🔄 | 9 Real-time (partial — vendor + delivery WS exist) |
+| ⬜ | 10 Admin · 11 Polish |
+
+Repo: [github.com/RishabhAggarwal613/Locafy](https://github.com/RishabhAggarwal613/Locafy) · Branch: `main`
+
 ---
 
 ## Documentation Index
@@ -70,8 +80,8 @@ Locafy connects customers with shops in their immediate locality. Instead of sea
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-org/locafy.git
-cd locafy
+git clone https://github.com/RishabhAggarwal613/Locafy.git
+cd Locafy
 
 # 2. Copy environment variables
 cp .env.example .env

@@ -1,6 +1,8 @@
 # Delivery App
 
-The delivery partner sub-application is isolated in the `(delivery)` route group. Delivery partners accept orders, navigate to shops and customers, and track their earnings.
+> **Implementation status (Phase 7):** Dashboard, order pool, active delivery with Mapbox map + GPS broadcast, history, and basic finance are built under `/delivery/*`. Separate turn-by-turn navigation page and photo proof are **(spec)**.
+
+The delivery partner sub-application lives under `/delivery`.
 
 ---
 

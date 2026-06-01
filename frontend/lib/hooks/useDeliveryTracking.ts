@@ -1,32 +1,35 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Client } from '@stomp/stompjs'
-import SockJS from 'sockjs-client'
 import toast from 'react-hot-toast'
+import { createStompClient, subscribeJson } from '@/lib/websocket/stompClient'
+
+interface PoolEvent {
+  type: string
+  orderNumber?: string
+  deliveryFee?: number
+}
 
 export function useDeliveryPoolAlerts(onNewOrder?: () => void) {
   useEffect(() => {
-    const wsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8080'}/ws`
-    const client = new Client({
-      webSocketFactory: () => new SockJS(wsUrl) as WebSocket,
-      reconnectDelay: 5000,
-      onConnect: () => {
-        client.subscribe('/topic/delivery/pool', (message) => {
-          try {
-            const payload = JSON.parse(message.body)
-            if (payload.type === 'ORDER_AVAILABLE') {
-              toast.success(`New delivery: ${payload.orderNumber} · earn ₹${payload.deliveryFee}`, { icon: '🛵' })
-              onNewOrder?.()
-            }
-          } catch {
-            // ignore
+    const client = createStompClient({
+      onConnect: (c) => {
+        subscribeJson<PoolEvent>(c, '/topic/delivery/pool', (payload) => {
+          if (payload.type === 'ORDER_AVAILABLE') {
+            toast.success(
+              `New delivery: ${payload.orderNumber} · earn ₹${payload.deliveryFee ?? 0}`,
+              { icon: '🛵' },
+            )
+            onNewOrder?.()
           }
         })
       },
     })
+
     client.activate()
-    return () => { client.deactivate() }
+    return () => {
+      client.deactivate()
+    }
   }, [onNewOrder])
 }
 
@@ -58,6 +61,12 @@ export function useDeliveryLocationBroadcast(
   }, [orderId, enabled, onLocation])
 }
 
+interface LocationEvent {
+  type: string
+  latitude: number
+  longitude: number
+}
+
 export function useCustomerDeliveryTracking(
   orderId: string | undefined,
   enabled: boolean,
@@ -66,19 +75,11 @@ export function useCustomerDeliveryTracking(
   useEffect(() => {
     if (!orderId || !enabled) return
 
-    const wsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8080'}/ws`
-    const client = new Client({
-      webSocketFactory: () => new SockJS(wsUrl) as WebSocket,
-      reconnectDelay: 5000,
-      onConnect: () => {
-        client.subscribe(`/topic/delivery/${orderId}`, (message) => {
-          try {
-            const payload = JSON.parse(message.body)
-            if (payload.type === 'LOCATION_UPDATE') {
-              onLocation(payload.latitude, payload.longitude)
-            }
-          } catch {
-            // ignore
+    const client = createStompClient({
+      onConnect: (c) => {
+        subscribeJson<LocationEvent>(c, `/topic/delivery/${orderId}`, (payload) => {
+          if (payload.type === 'LOCATION_UPDATE') {
+            onLocation(payload.latitude, payload.longitude)
           }
         })
       },
@@ -92,6 +93,8 @@ export function useCustomerDeliveryTracking(
       }).catch(() => {})
     })
 
-    return () => { client.deactivate() }
+    return () => {
+      client.deactivate()
+    }
   }, [orderId, enabled, onLocation])
 }

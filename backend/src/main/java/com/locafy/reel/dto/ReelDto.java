@@ -45,7 +45,7 @@ public class ReelDto {
     public static class FeedResponse {
         private List<ReelResponse> content;
         private String nextCursor;
-        private boolean hasMore;
+        private Boolean hasMore;
     }
 
     @Data

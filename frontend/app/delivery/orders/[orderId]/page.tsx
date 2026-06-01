@@ -2,14 +2,15 @@
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import DeliveryShell from '@/components/delivery/DeliveryShell'
 import DeliveryRouteMap from '@/components/delivery/DeliveryRouteMap'
 import { deliveryApi } from '@/lib/api/delivery'
 import { useDeliveryLocationBroadcast } from '@/lib/hooks/useDeliveryTracking'
-import type { OrderStatus } from '@/types'
+import { useOrderStatusUpdates } from '@/lib/hooks/useOrderStatusUpdates'
+import type { Order, OrderStatus } from '@/types'
 
 const ACTIONS: { status: OrderStatus; label: string; hint: string }[] = [
   { status: 'PICKED_UP', label: 'Picked up from shop', hint: 'Confirm you collected the order' },
@@ -45,6 +46,13 @@ export default function DeliveryOrderDetailPage() {
 
   const order = data?.order
   const trackingActive = order != null && ['READY', 'PICKED_UP', 'OUT_FOR_DELIVERY'].includes(order.status)
+
+  useOrderStatusUpdates(orderId, useCallback((updated: Order) => {
+    queryClient.setQueryData(['delivery-order', orderId], (prev: typeof data) => {
+      if (!prev?.order) return prev
+      return { ...prev, order: { ...prev.order, ...updated } }
+    })
+  }, [orderId, queryClient]))
 
   useDeliveryLocationBroadcast(orderId, trackingActive, (lat, lng) => {
     setPartnerLat(lat)

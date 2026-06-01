@@ -4,170 +4,190 @@ Locafy is a large application. This document breaks the build into 11 sequential
 
 ---
 
-## Phase 1 — Foundation
+## Current Progress (2026-05-31)
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| 1 — Foundation | ✅ Complete | Monorepo, Docker, MongoDB + Redis |
+| 2 — Authentication | ✅ Complete | JWT, Google OAuth, role middleware |
+| 3 — Official Website | ✅ Complete | 5 marketing pages + 3D hero |
+| 4 — Vendor Core | ✅ Complete | Shop + product CRUD, dashboard |
+| 5 — Customer Core | ✅ Complete | Explore, search, map (regex search; Atlas Search deferred) |
+| 6 — Cart, Orders, Payments | ✅ Complete | Razorpay + COD, vendor order alerts |
+| 7 — Delivery | ✅ Complete | Order pool, GPS, customer live map (no turn-by-turn nav page) |
+| 8 — Reels | ✅ Complete | HLS upload, geo feed, like/save, Reel Studio |
+| 9 — Real-time | 🔄 Partial | Vendor alerts + delivery GPS done; customer order WS pending |
+| 10 — Admin | ⬜ Not started | Dashboard stub only |
+| 11 — Polish | ⬜ Not started | — |
+
+**Latest commit on `main`:** Phase 8 reels (`478a5fe`). **Next:** Phase 9 — customer-facing order status WebSocket.
+
+---
+
+## Phase 1 — Foundation ✅
 
 **Goal:** Running monorepo with all services connected.
 
 **Tasks:**
-- [ ] Create monorepo structure (`frontend/`, `backend/`, `docs/`)
-- [ ] Initialize Next.js 14 app with TypeScript + Tailwind CSS
-- [ ] Initialize Spring Boot 3 project (Maven, Java 21)
-- [ ] Set up `docker-compose.yml` with MongoDB + Redis
-- [ ] Connect Spring Boot to MongoDB Atlas (test with a ping)
-- [ ] Connect Spring Boot to Redis
-- [ ] Set up `.env.example` with all variable names
-- [ ] Configure CORS in Spring Boot
-- [ ] Set up Spring Boot Actuator health endpoint
-- [ ] Configure Next.js route groups (5 groups)
+- [x] Create monorepo structure (`frontend/`, `backend/`, `docs/`)
+- [x] Initialize Next.js 14 app with TypeScript + Tailwind CSS
+- [x] Initialize Spring Boot 3 project (Maven, Java 21)
+- [x] Set up `docker-compose.yml` with MongoDB + Redis
+- [x] Connect Spring Boot to MongoDB Atlas (test with a ping)
+- [x] Connect Spring Boot to Redis
+- [x] Set up `.env.example` with all variable names
+- [x] Configure CORS in Spring Boot
+- [x] Set up Spring Boot Actuator health endpoint
+- [x] Configure Next.js route groups (5 groups)
 
 **Deliverable:** `curl http://localhost:8080/actuator/health` returns `{"status":"UP"}`
 
 ---
 
-## Phase 2 — Authentication
+## Phase 2 — Authentication ✅
 
 **Goal:** All 4 roles can sign up, log in, and receive JWTs. Google OAuth works.
 
 **Tasks:**
-- [ ] JWT utility class (generate access + refresh tokens)
-- [ ] `JwtAuthFilter` (validate JWT on every request)
-- [ ] `SecurityConfig` (URL patterns + role-based access)
-- [ ] `POST /api/auth/signup` — email + password
-- [ ] `POST /api/auth/login`
-- [ ] `POST /api/auth/refresh`
-- [ ] `POST /api/auth/logout` (Redis blocklist)
+- [x] JWT utility class (generate access + refresh tokens)
+- [x] `JwtAuthFilter` (validate JWT on every request)
+- [x] `SecurityConfig` (URL patterns + role-based access)
+- [x] `POST /api/auth/signup` — email + password
+- [x] `POST /api/auth/login`
+- [x] `POST /api/auth/refresh`
+- [x] `POST /api/auth/logout` (Redis blocklist)
 - [ ] `POST /api/auth/otp/send` + `verify` (Twilio)
-- [ ] `POST /api/auth/google` + `GoogleAuthService`
-- [ ] `POST /api/auth/google/link` + `unlink`
-- [ ] NextAuth.js v5 setup with Google provider
-- [ ] Next.js middleware route guards per role
-- [ ] Login / signup pages for all 4 role apps
-- [ ] `GoogleSignInButton` component
-- [ ] Zustand `authStore`
+- [x] `POST /api/auth/google` + `GoogleAuthService`
+- [x] `POST /api/auth/google/link` + `unlink`
+- [x] NextAuth.js v5 setup with Google provider
+- [x] Next.js middleware route guards per role
+- [x] Login / signup pages for all 4 role apps
+- [x] `GoogleSignInButton` component
+- [x] Zustand `authStore`
 
 **Deliverable:** All roles can register and log in. Google OAuth works.
 
 ---
 
-## Phase 3 — Official Marketing Website
+## Phase 3 — Official Marketing Website ✅
 
 **Goal:** 5-page marketing site is live with 3D hero.
 
 **Tasks:**
-- [ ] Three.js / `@react-three/fiber` hero scene (sphere with distort material)
-- [ ] Framer Motion page transitions and scroll-reveal animations
-- [ ] Official Navbar (logo + 5 nav links)
-- [ ] Home page: hero, features, how it works, roles, testimonials, stats, footer
-- [ ] Customer role page (`/customer`)
-- [ ] Vendor role page (`/vendor`)
-- [ ] Delivery role page (`/delivery`)
-- [ ] Admin role page (`/admin`)
-- [ ] SEO metadata for all pages
-- [ ] Mobile-responsive layout
+- [x] Three.js / `@react-three/fiber` hero scene (sphere with distort material)
+- [x] Framer Motion page transitions and scroll-reveal animations
+- [x] Official Navbar (logo + 5 nav links)
+- [x] Home page: hero, features, how it works, roles, testimonials, stats, footer
+- [x] Customer role page (`/customer`)
+- [x] Vendor role page (`/vendor`)
+- [x] Delivery role page (`/delivery`)
+- [x] Admin role page (`/admin`)
+- [x] SEO metadata for all pages
+- [x] Mobile-responsive layout
 
 **Deliverable:** All 5 official site pages are live and responsive.
 
 ---
 
-## Phase 4 — Vendor Core
+## Phase 4 — Vendor Core ✅
 
 **Goal:** Vendors can manage their shop and products.
 
 **Tasks:**
-- [ ] `Shop` model + `ShopRepository`
-- [ ] `POST /api/shops`, `PUT /api/shops/:id`, `GET /api/shops/:id`
-- [ ] Shop cover/logo image upload (Cloudinary)
-- [ ] `Product` model + `ProductRepository`
-- [ ] Full product CRUD endpoints
-- [ ] Product image upload (Cloudinary, up to 8 images)
-- [ ] Bulk product upload (CSV)
-- [ ] Vendor dashboard page (stats cards + recent orders)
-- [ ] Shop profile edit page (Mapbox pin drop for location)
-- [ ] Product list page + Add/Edit product forms
+- [x] `Shop` model + `ShopRepository`
+- [x] `POST /api/shops`, `PUT /api/shops/:id`, `GET /api/shops/:id`
+- [x] Shop cover/logo image upload (Cloudinary)
+- [x] `Product` model + `ProductRepository`
+- [x] Full product CRUD endpoints
+- [x] Product image upload (Cloudinary, up to 8 images)
+- [x] Bulk product upload (CSV)
+- [x] Vendor dashboard page (stats cards + recent orders)
+- [x] Shop profile edit page (Mapbox pin drop for location)
+- [x] Product list page + Add/Edit product forms
 
 **Deliverable:** Vendors can create a shop with products.
 
 ---
 
-## Phase 5 — Customer Core
+## Phase 5 — Customer Core ✅
 
 **Goal:** Customers can discover nearby shops and products.
 
 **Tasks:**
-- [ ] `Category` model + seeded category data
-- [ ] `GET /api/shops` with geo-radius query (`$geoNear`)
+- [x] `Category` model + seeded category data
+- [x] `GET /api/shops` with geo-radius query (`$geoNear`)
 - [ ] MongoDB Atlas Search indexes (`shops_search`, `products_search`)
-- [ ] `GET /api/search` unified search endpoint
+- [x] `GET /api/search` unified search endpoint
 - [ ] `GET /api/search/autocomplete` with Atlas Search autocomplete
-- [ ] Redis caching for shop listings + search results
-- [ ] Customer landing page (hero, categories, shop cards)
-- [ ] Search page (search bar, filters, results)
-- [ ] Shop detail page
-- [ ] Product detail page
-- [ ] Location switcher component + `locationStore`
-- [ ] Shop discovery map (Mapbox)
+- [x] Redis caching for shop listings + search results
+- [x] Customer landing page (hero, categories, shop cards)
+- [x] Search page (search bar, filters, results)
+- [x] Shop detail page
+- [x] Product detail page
+- [x] Location switcher component + `locationStore`
+- [x] Shop discovery map (Mapbox)
 
 **Deliverable:** Customers can find shops and products near them.
 
 ---
 
-## Phase 6 — Cart, Orders & Payments
+## Phase 6 — Cart, Orders & Payments ✅
 
 **Goal:** Full end-to-end purchase flow.
 
 **Tasks:**
-- [ ] `Cart` model + cart CRUD endpoints
-- [ ] `Order` model + `POST /api/orders` (place order)
-- [ ] Order status update endpoints (vendor side)
-- [ ] Razorpay order creation + payment verification
-- [ ] Razorpay webhook handler
-- [ ] `Transaction` model + ledger
-- [ ] COD order flow
-- [ ] Cart page
-- [ ] Checkout page (address selector + Razorpay modal)
-- [ ] Order list + order detail page (status timeline)
-- [ ] WebSocket vendor order alert
+- [x] `Cart` model + cart CRUD endpoints
+- [x] `Order` model + `POST /api/orders` (place order)
+- [x] Order status update endpoints (vendor side)
+- [x] Razorpay order creation + payment verification
+- [x] Razorpay webhook handler
+- [x] `Transaction` model + ledger
+- [x] COD order flow
+- [x] Cart page
+- [x] Checkout page (address selector + Razorpay modal)
+- [x] Order list + order detail page (status timeline)
+- [x] WebSocket vendor order alert
 
 **Deliverable:** Customer can place an order and pay with Razorpay or COD.
 
 ---
 
-## Phase 7 — Delivery
+## Phase 7 — Delivery ✅
 
 **Goal:** Delivery partners can accept and complete deliveries.
 
 **Tasks:**
-- [ ] Delivery partner signup + zone assignment
-- [ ] `GET /api/delivery/orders/pool` — available orders in zone
-- [ ] `PUT /api/orders/:id/accept` — accept an order
-- [ ] `PUT /api/orders/:id/pickup` + `deliver` status updates
-- [ ] `DeliveryLocation` model + GPS upsert endpoint
-- [ ] Delivery dashboard + order pool page
+- [x] Delivery partner signup + zone assignment
+- [x] `GET /api/delivery/orders/pool` — available orders in zone
+- [x] `PUT /api/orders/:id/accept` — accept an order
+- [x] `PUT /api/orders/:id/pickup` + `deliver` status updates
+- [x] `DeliveryLocation` model + GPS upsert endpoint
+- [x] Delivery dashboard + order pool page
 - [ ] Mapbox navigation page (turn-by-turn, two waypoints)
-- [ ] GPS WebSocket posting (every 5s while navigating)
-- [ ] Customer live tracking map
+- [x] GPS WebSocket posting (every 5s while navigating)
+- [x] Customer live tracking map
 - [ ] Photo proof upload on delivery (Cloudinary)
-- [ ] Delivery history + earnings basic view
+- [x] Delivery history + earnings basic view
 
 **Deliverable:** Full delivery lifecycle from acceptance to delivered.
 
 ---
 
-## Phase 8 — Reels
+## Phase 8 — Reels ✅
 
 **Goal:** Vendors can upload reels; customers see a geo-ranked feed.
 
 **Tasks:**
-- [ ] `Reel` model + repository
-- [ ] Cloudinary video upload with HLS eager transcoding
-- [ ] Cloudinary webhook for transcoding completion
-- [ ] `GET /api/reels` cursor-based paginated feed
-- [ ] Reel scoring/ranking algorithm (geo + engagement + recency)
-- [ ] `POST /api/reels/:id/like` + `save` (toggle)
-- [ ] Reel Studio page (vendor: upload, tag product, publish)
-- [ ] Customer reels feed (full-screen, HLS.js player, infinite scroll)
-- [ ] Optimistic like/save UI updates
-- [ ] Saved reels list in profile
+- [x] `Reel` model + repository
+- [x] Cloudinary video upload with HLS eager transcoding
+- [x] Cloudinary webhook for transcoding completion
+- [x] `GET /api/reels` cursor-based paginated feed
+- [x] Reel scoring/ranking algorithm (geo + engagement + recency)
+- [x] `POST /api/reels/:id/like` + `save` (toggle)
+- [x] Reel Studio page (vendor: upload, tag product, publish)
+- [x] Customer reels feed (full-screen, HLS.js player, infinite scroll)
+- [x] Optimistic like/save UI updates
+- [x] Saved reels list in profile
 
 **Deliverable:** Reels are live from upload to customer viewing.
 

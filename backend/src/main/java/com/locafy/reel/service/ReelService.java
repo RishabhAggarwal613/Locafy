@@ -50,12 +50,19 @@ public class ReelService {
     @Value("${cloudinary.cloud-name:}")
     private String cloudName;
 
+    private static final TypeReference<ReelDto.FeedResponse> FEED_CACHE_TYPE = new TypeReference<>() {};
+
     public ReelDto.FeedResponse getFeed(double lat, double lng, String cursor, int size, String customerId) {
         int pageSize = Math.min(Math.max(size, 1), 20);
         String cacheKey = String.format("locafy:reels:feed:%.3f:%.3f:%s:%d", lat, lng, nullSafe(cursor), pageSize);
 
-        ReelDto.FeedResponse cached = cacheService.getOrLoad(cacheKey, 600, new TypeReference<>() {},
-                () -> buildFeed(lat, lng, cursor, pageSize, null));
+        ReelDto.FeedResponse cached;
+        try {
+            cached = cacheService.getOrLoad(cacheKey, 600, FEED_CACHE_TYPE,
+                    () -> buildFeed(lat, lng, cursor, pageSize, null));
+        } catch (RuntimeException e) {
+            cached = buildFeed(lat, lng, cursor, pageSize, null);
+        }
 
         if (customerId == null) {
             return cached;
@@ -66,7 +73,7 @@ public class ReelService {
         return ReelDto.FeedResponse.builder()
                 .content(enriched)
                 .nextCursor(cached.getNextCursor())
-                .hasMore(cached.isHasMore())
+                .hasMore(Boolean.TRUE.equals(cached.getHasMore()))
                 .build();
     }
 

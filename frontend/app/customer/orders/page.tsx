@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useQuery } from '@tanstack/react-query'
+import { useCallback } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import CustomerShell from '@/components/customer/CustomerShell'
 import { ordersApi } from '@/lib/api/orders'
 import { useAuthStore } from '@/store/authStore'
+import { useUserNotifications } from '@/lib/hooks/useUserNotifications'
 import type { OrderStatus } from '@/types'
 
 const STATUS_COLORS: Partial<Record<OrderStatus, string>> = {
@@ -18,6 +20,11 @@ const STATUS_COLORS: Partial<Record<OrderStatus, string>> = {
 
 export default function OrdersPage() {
   const { user } = useAuthStore()
+  const queryClient = useQueryClient()
+
+  useUserNotifications(useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
+  }, [queryClient]))
 
   const { data, isLoading } = useQuery({
     queryKey: ['orders'],

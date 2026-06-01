@@ -19,7 +19,7 @@ This guide walks you through running the complete Locafy stack locally.
 ## Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/locafy.git
+git clone https://github.com/RishabhAggarwal613/Locafy.git
 cd locafy
 ```
 

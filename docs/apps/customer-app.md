@@ -1,6 +1,8 @@
 # Customer App
 
-The customer sub-application lives at the `/` route of the Next.js app (after login) and is isolated in the `(customer)` route group. It is the primary consumer-facing interface of Locafy.
+> **Implementation status (Phase 5–8):** Core discovery, cart, checkout, orders, reels, and saved profile are built under `/customer/*`. Auth uses `/customer/auth` (not `/auth/login`). This doc describes the full product spec; items marked **(spec)** are not yet implemented.
+
+The customer sub-application lives at `/customer` and uses `CustomerShell` + top navbar (not a route group `(customer)`).
 
 ---
 
@@ -43,14 +45,16 @@ After login, the user is redirected back to the landing page with the full navba
 
 **Navbar (after login):**
 ```
-[ Locafy Logo ]  [ Search ]  Reels  Cart(2)  Orders  Profile  [ Location: Koramangala ▼ ]
+[ Locafy ]  Explore  Reels  Search  Map  Orders  [Cart]  [Saved]  [Location ▼]  Sign out
 ```
+
+Actual routes: `/customer/explore`, `/customer/reels`, `/customer/search`, `/customer/map`, `/customer/orders`, `/customer/cart`, `/customer/profile` (saved reels).
 
 ---
 
 ## Pages
 
-### Reels Feed (`/reels`)
+### Reels Feed (`/customer/reels`)
 
 The reels page is a full-screen, vertically scrollable feed of short product videos — similar to Instagram Reels or TikTok, but every reel is a product showcase from a local vendor.
 
@@ -229,15 +233,11 @@ Full detail page for a single product.
 
 ---
 
-### Profile (`/profile`)
+### Profile (`/customer/profile`)
 
-- Personal info: name, email, phone, avatar (upload to Cloudinary)
-- Saved addresses (add / edit / delete)
-- Location preferences
-- Notification settings (SMS, email, push)
-- Order history quick link
-- Account settings: change password, link/unlink Google
-- Logout
+**Built:** Saved reels tab (`GET /api/reels/saved`).
+
+**(Spec — not built):** Personal info edit, saved addresses, notification settings, password change, full account settings.
 
 ---
 

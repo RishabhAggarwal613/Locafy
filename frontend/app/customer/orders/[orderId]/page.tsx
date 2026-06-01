@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import CustomerShell from '@/components/customer/CustomerShell'
@@ -11,6 +11,8 @@ import DeliveryRouteMap from '@/components/delivery/DeliveryRouteMap'
 import { ordersApi } from '@/lib/api/orders'
 import { useAuthStore } from '@/store/authStore'
 import { useCustomerDeliveryTracking } from '@/lib/hooks/useDeliveryTracking'
+import { useOrderStatusUpdates } from '@/lib/hooks/useOrderStatusUpdates'
+import type { Order } from '@/types'
 
 export default function OrderDetailPage() {
   const { orderId } = useParams<{ orderId: string }>()
@@ -33,6 +35,13 @@ export default function OrderDetailPage() {
     },
     onError: () => toast.error('Could not cancel order'),
   })
+
+  const handleLiveUpdate = useCallback((updated: Order) => {
+    queryClient.setQueryData(['order', orderId], updated)
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
+  }, [orderId, queryClient])
+
+  useOrderStatusUpdates(orderId, handleLiveUpdate)
 
   const showTracking = !!order
     && order.fulfillmentType === 'DELIVERY'

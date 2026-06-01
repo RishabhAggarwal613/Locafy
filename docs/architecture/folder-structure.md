@@ -2,6 +2,8 @@
 
 Locafy is organized as a **monorepo** with two top-level workspaces: `frontend/` (Next.js) and `backend/` (Spring Boot).
 
+> **Note:** Role apps live at `frontend/app/customer/`, `vendor/`, `delivery/`, `admin/` — not `(customer)` route groups. Only the marketing site uses `(official)/`. Some paths below show the original planned `(customer)` layout; see `frontend/app/` for the actual tree.
+
 ---
 
 ## Root

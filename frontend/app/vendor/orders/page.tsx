@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import VendorShell from '@/components/vendor/VendorShell'
 import { ordersApi } from '@/lib/api/orders'
 import { vendorApi } from '@/lib/api/shops'
-import { useVendorOrderAlerts } from '@/lib/hooks/useVendorOrderAlerts'
+import { useVendorOrderAlerts, type VendorOrderEvent } from '@/lib/hooks/useVendorOrderAlerts'
 import type { OrderStatus } from '@/types'
 
 const VENDOR_ACTIONS: { status: OrderStatus; label: string }[] = [
@@ -25,9 +25,12 @@ export default function VendorOrdersPage() {
     queryFn: () => vendorApi.getDashboard(),
   })
 
-  useVendorOrderAlerts(dashboard?.shopId, () => {
-    queryClient.invalidateQueries({ queryKey: ['vendor-orders'] })
-  })
+  useVendorOrderAlerts(dashboard?.shopId, useCallback((event: VendorOrderEvent) => {
+    if (event.type === 'NEW_ORDER' || event.type === 'ORDER_STATUS') {
+      queryClient.invalidateQueries({ queryKey: ['vendor-orders'] })
+      queryClient.invalidateQueries({ queryKey: ['vendor-dashboard'] })
+    }
+  }, [queryClient]))
 
   const { data, isLoading } = useQuery({
     queryKey: ['vendor-orders', filter],

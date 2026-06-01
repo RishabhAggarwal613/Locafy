@@ -61,10 +61,10 @@ The frontend is a single Next.js application using **App Router route groups** t
 | Route Group | Sub-Application | Description |
 |-------------|-----------------|-------------|
 | `(official)` | Marketing website | 3D hero, role pages, SEO landing |
-| `(customer)` | Customer app | Discovery, reels, orders, cart |
-| `(vendor)` | Vendor app | Shop dashboard, product and reel management |
-| `(delivery)` | Delivery app | Order pool, Mapbox navigation |
-| `(admin)` | Admin app | Platform management dashboard |
+| `customer/` | Customer app | Discovery, reels, orders, cart |
+| `vendor/` | Vendor app | Shop dashboard, product and reel management |
+| `delivery/` | Delivery app | Order pool, Mapbox navigation |
+| `admin/` | Admin app | Platform management dashboard |
 
 Each route group has its own layout, authentication guard (Next.js middleware), and Zustand store slice. There are zero shared routes between roles — a vendor cannot accidentally access a customer page.
 

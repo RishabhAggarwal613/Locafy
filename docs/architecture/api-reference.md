@@ -116,12 +116,14 @@ Authentication is required on all endpoints unless marked **Public**. Send the J
 |--------|------|------|-------------|
 | GET | `/api/reels` | Public | Paginated reel feed (cursor-based, geo-ranked) |
 | GET | `/api/reels/:id` | Public | Get single reel |
-| POST | `/api/reels` | Vendor | Upload and create a reel |
-| PUT | `/api/reels/:id` | Vendor (owner) | Edit reel metadata |
+| GET | `/api/reels/mine` | Vendor | Vendor's reels (all statuses) |
+| GET | `/api/reels/saved` | Customer | Get saved reels |
+| POST | `/api/reels` | Vendor | Upload and create a reel (multipart) |
+| PUT | `/api/reels/:id` | Vendor (owner) | Edit reel metadata / publish |
 | DELETE | `/api/reels/:id` | Vendor (owner) | Delete reel |
 | POST | `/api/reels/:id/like` | Customer | Like or unlike a reel |
 | POST | `/api/reels/:id/save` | Customer | Save or unsave a reel |
-| GET | `/api/reels/saved` | Customer | Get saved reels |
+| POST | `/api/reels/cloudinary-notify` | Public (webhook) | Cloudinary HLS transcoding complete |
 
 **Query Parameters for `GET /api/reels`:**
 
@@ -129,7 +131,7 @@ Authentication is required on all endpoints unless marked **Public**. Send the J
 |-------|------|-------------|
 | `lat` | float | User latitude (for geo-ranking) |
 | `lng` | float | User longitude |
-| `cursor` | string | Cursor for next page (ISO timestamp) |
+| `cursor` | string | Cursor for next page (reel ID from previous response) |
 | `size` | int | Page size (default: 10) |
 
 ---

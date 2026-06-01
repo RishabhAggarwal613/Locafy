@@ -1,6 +1,8 @@
 # Vendor App
 
-The vendor sub-application is isolated in the `(vendor)` route group. Vendors are shop owners who list their products, upload reels, manage orders, and track earnings.
+> **Implementation status (Phase 4 + 8):** Shop, products, orders, and Reel Studio are built. Finance/history sidebar items still marked "Soon". Paths use `/vendor/*` (not route group `(vendor)`).
+
+The vendor sub-application is isolated under `/vendor`. Vendors are shop owners who list their products, upload reels, manage orders, and track earnings.
 
 ---
 
@@ -115,31 +117,14 @@ Form fields:
 
 ---
 
-### Reel Studio (`/vendor/reels`)
+### Reel Studio (`/vendor/reels`) ✅
 
-**Reel List:**
-- Published / Draft / Scheduled tabs
-- Views, likes, saves stats per reel
+**Built:**
+- Reel list with publish / processing / delete
+- Upload at `/vendor/reels/new` — video, title, caption, product tag, publish toggle
+- Cloudinary HLS transcoding + optional webhook
 
-**Upload Reel (`/vendor/reels/new`):**
-
-1. **Upload Video:**
-   - Drag & drop or file picker
-   - Accepted: MP4 / MOV, max 60 seconds, max 100MB
-   - Cloudinary upload with progress bar
-   - Auto-generates thumbnail after upload
-
-2. **Reel Metadata:**
-   - Title (optional)
-   - Description / caption
-   - Tag a product from the shop's catalog (links reel → product page)
-
-3. **Publish / Schedule:**
-   - Publish Now
-   - Schedule for later (date + time picker)
-   - Save as Draft
-
-**Note:** Cloudinary automatically transcodes uploaded videos to adaptive HLS for smooth mobile playback.
+**(Spec — not built):** Published / Draft / Scheduled tabs, schedule picker.
 
 ---
 

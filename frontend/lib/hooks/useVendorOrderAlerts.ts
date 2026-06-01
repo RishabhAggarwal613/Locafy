@@ -1,29 +1,32 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Client } from '@stomp/stompjs'
-import SockJS from 'sockjs-client'
 import toast from 'react-hot-toast'
+import { createStompClient, subscribeJson } from '@/lib/websocket/stompClient'
+import type { Order } from '@/types'
 
-export function useVendorOrderAlerts(shopId?: string, onNewOrder?: () => void) {
+interface VendorOrderEvent {
+  type: string
+  orderNumber?: string
+  order?: Order
+}
+
+export type { VendorOrderEvent }
+
+export function useVendorOrderAlerts(
+  shopId?: string,
+  onEvent?: (event: VendorOrderEvent) => void,
+) {
   useEffect(() => {
     if (!shopId) return
 
-    const wsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8080'}/ws`
-    const client = new Client({
-      webSocketFactory: () => new SockJS(wsUrl) as WebSocket,
-      reconnectDelay: 5000,
-      onConnect: () => {
-        client.subscribe(`/topic/vendor/${shopId}/orders`, (message) => {
-          try {
-            const payload = JSON.parse(message.body)
-            if (payload.type === 'NEW_ORDER') {
-              toast.success(`New order: ${payload.orderNumber}`, { icon: '🔔' })
-              onNewOrder?.()
-            }
-          } catch {
-            // ignore malformed messages
+    const client = createStompClient({
+      onConnect: (c) => {
+        subscribeJson<VendorOrderEvent>(c, `/topic/vendor/${shopId}/orders`, (payload) => {
+          if (payload.type === 'NEW_ORDER' && payload.orderNumber) {
+            toast.success(`New order: ${payload.orderNumber}`, { icon: '🔔' })
           }
+          onEvent?.(payload)
         })
       },
     })
@@ -32,5 +35,5 @@ export function useVendorOrderAlerts(shopId?: string, onNewOrder?: () => void) {
     return () => {
       client.deactivate()
     }
-  }, [shopId, onNewOrder])
+  }, [shopId, onEvent])
 }
