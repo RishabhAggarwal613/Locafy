@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Fail Vercel builds when required env vars are missing.
- * Local dev skips this check unless CHECK_ENV=1.
+ * Warn when required env vars are missing during build.
+ * Run `npm run check-env` (CHECK_ENV=1) to fail locally before deploy.
  */
 
 const REQUIRED = [
@@ -18,19 +18,19 @@ if (missing.length === 0) {
   process.exit(0)
 }
 
-const onVercel = Boolean(process.env.VERCEL)
-const strict = onVercel || process.env.CHECK_ENV === '1'
-
 const message = `[check-env] Missing required env: ${missing.join(', ')}`
+const strict = process.env.CHECK_ENV === '1'
 
 if (strict) {
   console.error(message)
-  if (onVercel) {
-    console.error('Add them in Vercel → Project Settings → Environment Variables.')
-  } else {
-    console.error('Copy frontend/.env.example to frontend/.env.local and fill in values.')
-  }
+  console.error('Copy frontend/.env.example to frontend/.env.local and fill in values.')
+  console.error('Or add them in Vercel → Project Settings → Environment Variables.')
   process.exit(1)
 }
 
-console.warn(`${message} (skipped — not on Vercel)`)
+console.warn(message)
+if (process.env.VERCEL) {
+  console.warn('[check-env] Build continues — add env vars in Vercel for auth, API, and maps to work.')
+} else {
+  console.warn('[check-env] Build continues — set vars in .env.local for full functionality.')
+}

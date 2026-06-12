@@ -48,7 +48,7 @@ Vercel → **Project → Settings → Environment Variables**. Add for **Product
 
 See `frontend/.env.example` for the full list.
 
-Builds on Vercel **fail fast** if required vars are missing (`scripts/check-env.mjs`).
+Builds on Vercel **warn** if required vars are missing but still succeed. Run `npm run check-env` locally to fail fast before deploy.
 
 ### 3. Google OAuth redirect URIs
 
@@ -111,7 +111,7 @@ No GitHub Action needed — Vercel watches the repo directly.
 
 | Issue | Fix |
 |-------|-----|
-| Build fails: missing env | Add required vars in Vercel dashboard |
+| Build fails: missing env | Run `npm run check-env` locally; on Vercel add vars then redeploy — build no longer blocks on missing env |
 | Google login redirect error | Add exact callback URL to Google OAuth client |
 | API CORS error | Add frontend URL to backend `FRONTEND_URL` |
 | Cookies / auth not persisting | Backend must use HTTPS; `withCredentials` needs matching CORS |
