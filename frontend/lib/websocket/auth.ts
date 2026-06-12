@@ -10,6 +10,8 @@ export function getAccessToken(): string | null {
   }
 }
 
+import { getWsUrl as resolveWsUrl } from '@/lib/env'
+
 export function getWsUrl(): string {
-  return `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8080'}/ws`
+  return resolveWsUrl()
 }

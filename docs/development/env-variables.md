@@ -74,7 +74,7 @@ All environment variables required to run Locafy. Copy `.env.example` to `.env` 
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `FRONTEND_URL` | `http://localhost:3000` | Frontend URL for CORS |
+| `FRONTEND_URL` | `http://localhost:3000` | Allowed CORS origin(s). Comma-separated for multiple (e.g. production + Vercel preview URL). |
 | `SERVER_PORT` | `8080` | Spring Boot server port |
 | `PLATFORM_FEE_PERCENT` | `10` | Platform fee percentage per order |
 

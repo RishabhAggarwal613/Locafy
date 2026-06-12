@@ -23,12 +23,14 @@ Locafy deploys to:
 GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 NEXTAUTH_SECRET
-NEXTAUTH_URL=https://locafy.in
+NEXT_PUBLIC_BACKEND_URL=https://api.locafy.in
+NEXTAUTH_URL=https://locafy.in          # custom domain only; trustHost handles previews
 NEXT_PUBLIC_MAPBOX_TOKEN
 NEXT_PUBLIC_RAZORPAY_KEY_ID
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-BACKEND_URL=https://api.locafy.in
 ```
+
+See [Vercel Deployment](./vercel.md) for the full setup guide.
 
 ### Custom Domain
 

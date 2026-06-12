@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { getBackendUrl } from '@/lib/env'
 
-const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'
+const API_BASE = getBackendUrl()
 
 const AUTH_ENDPOINTS = ['/api/auth/login', '/api/auth/signup', '/api/auth/google', '/api/auth/refresh']
 

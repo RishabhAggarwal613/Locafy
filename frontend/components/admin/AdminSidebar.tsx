@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
 import { useAuth } from '@/lib/hooks/useAuth'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 const NAV = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
@@ -23,7 +24,7 @@ export default function AdminSidebar() {
   return (
     <aside className="w-60 bg-gray-900 border-r border-gray-800 flex flex-col shrink-0">
       <div className="p-5 border-b border-gray-800">
-        <Link href="/" className="font-bold text-rose-500">Locafy Admin</Link>
+        <LocafyLogo href="/" label="Locafy Admin" size="sm" labelClassName="text-rose-500 font-bold text-sm" />
         <p className="text-xs text-gray-600 mt-1 truncate">{user?.email}</p>
       </div>
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">

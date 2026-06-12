@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useAuthStore } from '@/store/authStore'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 const NAV = [
   { label: 'Dashboard', href: '/delivery/dashboard', icon: '📊' },
@@ -21,7 +22,7 @@ export default function DeliveryShell({ children }: { children: React.ReactNode 
     <div className="min-h-screen bg-gray-50 flex">
       <aside className="w-60 bg-white border-r border-gray-100 flex flex-col shrink-0">
         <div className="p-5 border-b border-gray-100">
-          <Link href="/delivery" className="font-bold text-amber-600">Locafy Delivery</Link>
+          <LocafyLogo href="/delivery" label="Locafy Delivery" size="sm" labelClassName="text-amber-600 font-bold text-sm" />
           <p className="text-xs text-gray-400 mt-1 truncate">{user?.email}</p>
         </div>
         <nav className="flex-1 p-3 space-y-1">

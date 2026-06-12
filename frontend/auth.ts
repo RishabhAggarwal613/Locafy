@@ -2,6 +2,8 @@ import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  // Required on Vercel — infers NEXTAUTH_URL from the deployment host
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,

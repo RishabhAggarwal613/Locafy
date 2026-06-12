@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
@@ -40,18 +41,11 @@ export default function OfficialNavbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-md group-hover:bg-indigo-700 transition-colors">
-            <span className="text-white font-black text-sm tracking-tight">L</span>
-          </div>
-          <span
-            className={`font-black text-xl tracking-tight transition-colors ${
-              onDarkHero ? 'text-white' : 'text-gray-900'
-            }`}
-          >
-            Locafy
-          </span>
-        </Link>
+        <LocafyLogo
+          href="/"
+          size="md"
+          labelClassName={`text-xl transition-colors ${onDarkHero ? 'text-white' : 'text-gray-900'}`}
+        />
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">

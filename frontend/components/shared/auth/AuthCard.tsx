@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 interface Props {
   title: string
   subtitle: string
-  accentColor: string
   footerText: string
   footerLinkLabel: string
   footerLinkHref: string
@@ -13,7 +13,6 @@ interface Props {
 export function AuthCard({
   title,
   subtitle,
-  accentColor,
   footerText,
   footerLinkLabel,
   footerLinkHref,
@@ -24,12 +23,7 @@ export function AuthCard({
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <div className={`w-8 h-8 ${accentColor} rounded-lg flex items-center justify-center`}>
-              <span className="text-white font-bold text-sm">L</span>
-            </div>
-            <span className="font-bold text-xl text-gray-900">Locafy</span>
-          </Link>
+          <LocafyLogo href="/" className="justify-center" labelClassName="text-xl text-gray-900 font-bold" />
           <h1 className="mt-6 text-2xl font-bold text-gray-900">{title}</h1>
           <p className="mt-1 text-sm text-gray-500">{subtitle}</p>
         </div>

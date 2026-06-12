@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-env.mjs && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-env": "CHECK_ENV=1 node scripts/check-env.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

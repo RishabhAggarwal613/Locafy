@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { RoleAuthConfig } from '@/lib/auth/roleAuthConfig'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 interface Props {
   config: RoleAuthConfig
@@ -77,12 +78,7 @@ export default function AuthShell({ config, marketingHref, children }: Props) {
           </div>
 
           <div className="relative z-10">
-            <Link href="/" className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors">
-              <div className="w-9 h-9 bg-white/15 backdrop-blur rounded-lg flex items-center justify-center font-bold border border-white/10">
-                L
-              </div>
-              <span className="font-bold text-lg">Locafy</span>
-            </Link>
+            <LocafyLogo href="/" labelClassName="text-lg text-white" />
           </div>
 
           <div className="relative z-10 max-w-lg">
@@ -101,12 +97,7 @@ export default function AuthShell({ config, marketingHref, children }: Props) {
               {config.icon}
             </div>
             <div className="relative z-10 px-4 sm:px-6 py-8">
-              <Link href="/" className="inline-flex items-center gap-2 text-white/90 hover:text-white mb-4">
-                <div className="w-8 h-8 bg-white/15 rounded-lg flex items-center justify-center font-bold text-sm border border-white/10">
-                  L
-                </div>
-                <span className="font-bold">Locafy</span>
-              </Link>
+              <LocafyLogo href="/" size="sm" labelClassName="text-white font-bold" className="mb-4" />
               <IntroContent config={config} marketingHref={marketingHref} compact />
             </div>
           </div>

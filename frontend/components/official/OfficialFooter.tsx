@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 
 const LINKS = {
   Platform: [
@@ -27,12 +28,7 @@ export default function OfficialFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-black text-sm">L</span>
-              </div>
-              <span className="text-white font-black text-xl">Locafy</span>
-            </Link>
+            <LocafyLogo href="/" labelClassName="text-white text-xl" className="mb-4" />
             <p className="text-sm leading-relaxed max-w-xs text-gray-500">
               Hyperlocal product discovery and ordering — connecting neighbourhoods,
               one shop at a time.

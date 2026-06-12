@@ -67,6 +67,7 @@ Repo: [github.com/RishabhAggarwal613/Locafy](https://github.com/RishabhAggarwal6
 | [Local Setup](./deployment/local-setup.md) | Run the full stack locally with Docker Compose |
 | [Docker](./deployment/docker.md) | Dockerfile and Docker Compose configuration |
 | [Production](./deployment/production.md) | AWS + Vercel production deployment guide |
+| [Vercel (Frontend)](./deployment/vercel.md) | Step-by-step Vercel deploy for `frontend/` |
 
 ### Development
 | File | Description |

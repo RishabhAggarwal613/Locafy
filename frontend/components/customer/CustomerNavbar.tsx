@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import LocationSwitcher from './LocationSwitcher'
+import LocafyLogo from '@/components/shared/LocafyLogo'
 import { useAuthStore } from '@/store/authStore'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { cartApi } from '@/lib/api/cart'
@@ -30,7 +31,7 @@ export default function CustomerNavbar() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-        <Link href="/customer/explore" className="font-bold text-indigo-600 shrink-0">Locafy</Link>
+        <LocafyLogo href="/customer/explore" size="sm" labelClassName="text-indigo-600 font-bold" className="shrink-0" />
 
         <nav className="hidden md:flex items-center gap-1">
           {NAV.map(({ label, href }) => (
